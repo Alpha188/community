@@ -50,10 +50,11 @@ public class AuthorizeController {
 		GithubUser githubUser = githubProvider.getUser(accessToken);
 		if (githubUser != null && githubUser.getId() != null) {
 			User user = new User();
+			String token=UUID.randomUUID().toString();
 			user.setAccountId(String.valueOf(githubUser.getId()));
 			user.setName(githubUser.getName());
-			String token=UUID.randomUUID().toString();
 			user.setToken(token);
+			user.setBio(githubUser.getBio());
 			userMapper.insert(user);
 			
 			Cookie cookie = new Cookie("token", token);

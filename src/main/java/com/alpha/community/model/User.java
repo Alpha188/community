@@ -10,6 +10,7 @@ public class User {
 	private String name;
 	private String AccountId;
 	private String token;
+	private String bio;
 	private Date gmtCreate;
 	private Date gmtModified;
 
