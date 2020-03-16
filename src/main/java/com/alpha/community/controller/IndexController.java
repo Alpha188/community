@@ -10,20 +10,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.alpha.community.mapper.UserMapper;
 import com.alpha.community.model.User;
 
-
 @Controller
 public class IndexController {
 	@Autowired
 	private UserMapper userMapper;
-	
+
 	@GetMapping("/")
 	public String index(HttpServletRequest req) {
-		for (Cookie cookie : req.getCookies()) {
-			if(cookie.getName().equals("token")) {
-				String token = cookie.getValue();
-				User user = userMapper.getUser(token);
-				req.getSession().setAttribute("user", user);
-				break;
+		Cookie[] cookies = req.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("token")) {
+					String token = cookie.getValue();
+					User user = userMapper.getUser(token);
+					req.getSession().setAttribute("user", user);
+					break;
+				}
 			}
 		}
 		return "index";

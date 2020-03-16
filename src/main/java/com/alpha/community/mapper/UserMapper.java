@@ -8,7 +8,7 @@ import com.alpha.community.model.User;
 
 @Mapper
 public interface UserMapper {
-	@Insert("insert into user(account_id,name,bio,token,gmt_create,gmt_modified) value(#{accountId},#{name},#{bio},#{token},now(),now())")
+	@Insert("insert into user(account_id,name,bio,avatar_url,token,gmt_create,gmt_modified) value(#{accountId},#{name},#{bio},#{avatarUrl},#{token},now(),now())")
 	void insert(User user);
 	@Select("select * from user where token = #{token}")
 	User getUser(String token);

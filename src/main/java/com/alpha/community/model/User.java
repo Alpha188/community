@@ -11,6 +11,7 @@ public class User {
 	private String AccountId;
 	private String token;
 	private String bio;
+	private String avatarUrl;
 	private Date gmtCreate;
 	private Date gmtModified;
 
