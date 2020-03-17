@@ -22,8 +22,9 @@
 				<!-- 设置当前页为激活状态 -->
 				<!-- 如果不是当前页,设置跳转地址 -->
 				<li th:each="page_num : ${pageInfo.navigatepageNums}"
-					th:class="${page_num==pageInfo.pageNum}?'active':''"><a
-					th:href="@{${#request.requestURL}(page=${page_num})}" th:text="${page_num}"></a></li>
+					th:class="${page_num==pageInfo.pageNum}?'active':''">
+					<a th:href="@{${#request.requestURL}(page=${page_num})}" th:text="${page_num}"></a>
+				</li>
 
 				<!-- 下一页按钮 -->
 				<li th:if="${pageInfo.hasNextPage}"><a

@@ -16,4 +16,6 @@ public interface QuestionMapper {
 	void insert(Question question);
 	@Select("select * from question")
 	List<Question> list();
+	@Select("select * from question where creator = #{creator}")
+	List<Question> listByCreator(Integer creator);
 }
