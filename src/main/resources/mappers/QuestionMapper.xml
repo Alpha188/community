@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alpha.community.mapper.QuestionMapper">
+	<resultMap id="ResultMapWithUser" type="com.alpha.community.dto.QuestionDTO">
+		<collection property="user" column="creator"
+			select="com.alpha.community.mapper.UserMapper.getUserById"></collection>
+	</resultMap>
+
+	<select id="listWithUser" resultMap="ResultMapWithUser">
+		select * from question
+	</select>
+	
+	<select id="listWithUserByCreator" resultMap="ResultMapWithUser" parameterType="Integer">
+		select * from question where creator = #{creator}
+	</select>
+</mapper>

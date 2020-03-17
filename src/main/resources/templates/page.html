@@ -29,7 +29,7 @@
 				<!-- 下一页按钮 -->
 				<li th:if="${pageInfo.hasNextPage}"><a
 					th:href="@{${#request.requestURL}(page=${pageInfo.pageNum + 1})}" aria-label="Next">
-						<span aria-hidden="true">&laquo;</span>
+						<span aria-hidden="true">&raquo;</span>
 				</a></li>
 
 				<!-- 末页按钮 -->
