@@ -10,8 +10,24 @@
 </head>
 
 <body>
+	<!-- 导航栏 -->
 	<div class="container-fluid" th:insert="~{navigation :: navbar}"></div>
+	<!-- 话题列表 -->
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" th:insert="~{questions :: questions}"></div>
 
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+				<div class="aw-mod publish-help">
+					<div class="mod-head">
+						<h3>热门话题</h3>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
 
 
 </body>

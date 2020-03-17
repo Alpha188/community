@@ -8,6 +8,7 @@ body{
 
 .btn-publish{
 	margin-bottom: 10px;
+	float: right;
 }
 .mod-body p{
 	padding: 10px 0;

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<div th:fragment="page">
+		<nav aria-label="Page navigation">
+			<ul class="pagination">
+				<!-- 首页按钮 -->
+				<li><a th:href="@{${#request.requestURL}(page=1)}">首页</a></li>
+
+				<!-- 上一页按钮 -->
+				<li th:if="${pageInfo.hasPreviousPage}"><a
+					th:href="@{${#request.requestURL}(page=${pageInfo.pageNum - 1})}" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+				</a></li>
+
+				<!-- 分页按钮 -->
+				<!-- 设置当前页为激活状态 -->
+				<!-- 如果不是当前页,设置跳转地址 -->
+				<li th:each="page_num : ${pageInfo.navigatepageNums}"
+					th:class="${page_num==pageInfo.pageNum}?'active':''"><a
+					th:href="@{${#request.requestURL}(page=${page_num})}" th:text="${page_num}"></a></li>
+
+				<!-- 下一页按钮 -->
+				<li th:if="${pageInfo.hasNextPage}"><a
+					th:href="@{${#request.requestURL}(page=${pageInfo.pageNum + 1})}" aria-label="Next">
+						<span aria-hidden="true">&laquo;</span>
+				</a></li>
+
+				<!-- 末页按钮 -->
+				<li><a th:href="@{${#request.requestURL}(page=${pageInfo.pages})}">末页</a></li>
+			</ul>
+		</nav>
+	</div>
+</body>
+</html>

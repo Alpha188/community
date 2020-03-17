@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.alpha.community.mapper.questionMapper;
+import com.alpha.community.mapper.QuestionMapper;
 import com.alpha.community.model.Question;
 import com.alpha.community.model.User;
 
 @Controller
 public class PublishController {
 	@Autowired
-	private questionMapper questionMapper;
+	private QuestionMapper questionMapper;
 
 	
 	@GetMapping("/publish")
@@ -54,6 +54,10 @@ public class PublishController {
 		}
 		if (description == null || description.equals("")) {
 			model.addAttribute("error", "补充不能为空");
+			return "publish";
+		}
+		if (tag == null || tag.equals("")) {
+			model.addAttribute("error", "标签不能为空");
 			return "publish";
 		}
 
