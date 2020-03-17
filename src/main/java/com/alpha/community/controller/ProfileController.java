@@ -2,7 +2,6 @@ package com.alpha.community.controller;
 
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alpha.community.dto.QuestionDTO;
-import com.alpha.community.model.Question;
 import com.alpha.community.model.User;
 import com.alpha.community.service.QuestionService;
 import com.github.pagehelper.PageHelper;
