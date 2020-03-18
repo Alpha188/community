@@ -1,23 +1,36 @@
 package com.alpha.community.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-
-import com.alpha.community.dto.QuestionDTO;
 import com.alpha.community.model.Question;
+import com.alpha.community.model.QuestionExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface QuestionMapper {
+    long countByExample(QuestionExample example);
 
-	@Insert(" insert into question (id, creator, title,  tag, gmt_create, gmt_modified, description) values (#{id,jdbcType=INTEGER}, #{creator,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},  #{tag,jdbcType=VARCHAR},now(), now(), #{description,jdbcType=LONGVARCHAR})")
-	void insert(Question question);
+    int deleteByExample(QuestionExample example);
 
-	@Select("select * from question where creator = #{creator}")
-	List<Question> listByCreator(Integer creator);
+    int deleteByPrimaryKey(Integer id);
 
-	List<QuestionDTO> listWithUser();
-	List<QuestionDTO> listWithUserByCreator(Integer creator);
+    int insert(Question record);
+
+    int insertSelective(Question record);
+
+    List<Question> selectByExampleWithBLOBs(QuestionExample example);
+
+    List<Question> selectByExample(QuestionExample example);
+
+    Question selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") Question record, @Param("example") QuestionExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") Question record, @Param("example") QuestionExample example);
+
+    int updateByExample(@Param("record") Question record, @Param("example") QuestionExample example);
+
+    int updateByPrimaryKeySelective(Question record);
+
+    int updateByPrimaryKeyWithBLOBs(Question record);
+
+    int updateByPrimaryKey(Question record);
 }
