@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="${question.title}"></title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="/css/community.css">
+</head>
+
+<body>
+	<div class="container-fluid" th:insert="~{navigation :: navbar}"></div>
+
+	<!-- 话题列表 -->
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+				<h3 th:text="${question.title}"></h3>
+				<span class="text-desc"> 
+					作者：<span th:text="${question.user.name}"></span> | 
+					发布于：<span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span> | 
+					阅读数：<span th:text="${question.viewCount}"></span> |
+				</span>
+
+				<hr>
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">问题详情</div>
+
+				<br><hr>
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<a th:href="'/publish/'+${question.id}" th:if="${session.user!=null && question.creator==session.user.id}"> 
+						<span class="glyphicon glyphicon-pencil community-menu" aria-hidden="true">编辑</span>
+					</a>
+				</div>
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+				<div class="aw-mod publish-help">
+					<div class="mod-head">
+						<h4>发起人</h4>
+						<div class="media">
+							<a class="pull-left" href="#"> <img class="media-object img-rounded" th:src="${question.user.avatarUrl}"></a>
+							<div class="media-body">
+								<h5 class="media-heading">
+									<a th:text="${question.user.name}"></a>
+								</h5>
+								<span class="text-desc" th:text="${question.user.bio}"></span>
+							</div>
+						</div>
+						<hr />
+						<h4>相关问题</h4>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+</html>

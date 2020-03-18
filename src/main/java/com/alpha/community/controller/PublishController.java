@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.alpha.community.mapper.QuestionMapper;
 import com.alpha.community.model.Question;
 import com.alpha.community.model.User;
+import com.alpha.community.service.QuestionService;
 
 @Controller
 public class PublishController {
 	@Autowired
 	private QuestionMapper questionMapper;
+	@Autowired
+	private QuestionService questionService;
 
 	
 	@GetMapping("/publish")
@@ -28,13 +31,14 @@ public class PublishController {
 	}
 	
 	@GetMapping("/publish/{id}")
-	public String edit(@PathVariable("id")Integer id,
-					   Model model) {
+	public String edit(@PathVariable("id") Integer id, Model model) {
 		Question question = questionMapper.selectByPrimaryKey(id);
-		model.addAttribute("id", question.getId());
-		model.addAttribute("title", question.getTitle());
-		model.addAttribute("description", question.getDescription());
-		model.addAttribute("tag", question.getTag());
+		if (question != null) {
+			model.addAttribute("id", question.getId());
+			model.addAttribute("title", question.getTitle());
+			model.addAttribute("description", question.getDescription());
+			model.addAttribute("tag", question.getTag());
+		}
 		return "publish";
 	}
 	
@@ -70,7 +74,7 @@ public class PublishController {
 			question.setCreator(user.getId());
 			question.setId(id);
 
-			questionMapper.insert(question);
+			questionService.InsertOrUpdate(question);
 			return "redirect:/";
 		} else {
 			model.addAttribute("error", "用户未登录");
