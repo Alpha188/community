@@ -17,6 +17,7 @@ import com.alpha.community.dto.GithubUser;
 import com.alpha.community.mapper.UserMapper;
 import com.alpha.community.model.User;
 import com.alpha.community.provider.GithubProvider;
+import com.alpha.community.service.UserService;
 
 @Controller
 public class AuthorizeController {
@@ -24,7 +25,7 @@ public class AuthorizeController {
 	@Autowired
 	private GithubProvider githubProvider;
 	@Autowired
-	private UserMapper userMapper;
+	private UserService userService;
 	
 	@Value("${github.client.id}")
 	private String githubClientId;
@@ -54,7 +55,7 @@ public class AuthorizeController {
 			user.setToken(token);
 			user.setAvatarUrl(githubUser.getAvatarUrl());
 			user.setBio(githubUser.getBio());
-			userMapper.insert(user);
+			userService.insertOrUpdateUser(user);
 			
 			Cookie cookie = new Cookie("token", token);
 			cookie.setMaxAge(COOKIE_TOKEN_AGE);
