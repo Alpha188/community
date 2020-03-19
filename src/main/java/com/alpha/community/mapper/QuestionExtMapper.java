@@ -10,4 +10,6 @@ public interface QuestionExtMapper {
 
 	List<QuestionDTO> listWithUserByCreator(Integer creator);
 
+	void incViewCount(Integer id);
+
 }

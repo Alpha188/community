@@ -14,17 +14,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.alpha.community.dto.QuestionDTO;
-
+import com.alpha.community.mapper.QuestionExtMapper;
 import com.alpha.community.service.QuestionService;
 
 @Controller
 public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
-
+	@Autowired
+	private QuestionExtMapper questionExtMapper;
 	@GetMapping("/question/{id}")
 	public String question(@PathVariable("id") Integer id, Model model) {
-
+		// 增加阅读数
+		questionExtMapper.incViewCount(id);
 		// 获取问题
 		QuestionDTO question = questionService.getWithUser(id);
 		model.addAttribute("question", question);

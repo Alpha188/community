@@ -13,4 +13,8 @@
 	<select id="listWithUserByCreator" resultMap="ResultMapWithUser" parameterType="Integer">
 		select * from question where creator = #{creator}
 	</select>
+	
+	<update id="incViewCount" parameterType="Integer">
+		update question set view_count = view_count +1 where id = #{id}
+	</update>
 </mapper>
