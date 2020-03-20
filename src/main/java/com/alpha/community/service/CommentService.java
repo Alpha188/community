@@ -2,6 +2,7 @@ package com.alpha.community.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alpha.community.enums.CommentTypeEnum;
 import com.alpha.community.enums.CustomizeErrorCodeEnum;
@@ -21,18 +22,21 @@ public class CommentService {
 	@Autowired
 	private QuestionMapper questionMapper;
 
+	@Transactional
 	public void insert(Comment comment) {
 		if (comment.getParentId() == null || comment.getParentId() == 0) {
 			throw new CustomizeException(CustomizeErrorCodeEnum.TARGET_PARAM_NOT_FOUND);
 		}
-		if (comment.getType() == null || !CommentTypeEnum.isExist(comment.getType())) {
+		Integer type = comment.getType();
+
+		if (type == null || !CommentTypeEnum.isExist(type)) {
 			throw new CustomizeException(CustomizeErrorCodeEnum.TYPE_PARAM_WRONG);
 		}
-		
+
 		// 是否是二级评论(对评论回复)
-		if (comment.getType() == CommentTypeEnum.COMMENT.getType()) {
+		if ((type == CommentTypeEnum.COMMENT.getType())) {
 			// 对评论进行回复
-			
+
 			// 1.判断一级评论是否存在
 			Comment dbComment = commentMapper.selectByPrimaryKey(comment.getParentId());
 			if (dbComment == null) {
@@ -50,7 +54,7 @@ public class CommentService {
 
 		} else {
 			// 对问题进行回复
-			
+
 			// 1.判断问题是否存在
 			Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
 			if (question == null) {
@@ -58,9 +62,9 @@ public class CommentService {
 			}
 			// 2.插入
 			commentMapper.insertSelective(comment);
-			
-			//3.增加回复数
-			 questionExtMapper.incCommentCount(question.getId());
+
+			// 3.增加回复数
+			questionExtMapper.incCommentCount(question.getId());
 		}
 
 	}
