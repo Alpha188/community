@@ -7,7 +7,7 @@ import com.alpha.community.model.User;
 import lombok.Data;
 @Data
 public class QuestionDTO {
-    private Integer id;
+    private Long id;
     private Integer creator;
     private String title;
     private Integer commentCount;
