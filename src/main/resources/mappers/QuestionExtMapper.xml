@@ -10,11 +10,14 @@
 		select * from question
 	</select>
 	
-	<select id="listWithUserByCreator" resultMap="ResultMapWithUser" parameterType="Integer">
+	<select id="listWithUserByCreator" resultMap="ResultMapWithUser" parameterType="Long">
 		select * from question where creator = #{creator}
 	</select>
 	
-	<update id="incViewCount" parameterType="Integer">
+	<update id="incViewCount" parameterType="Long">
 		update question set view_count = view_count +1 where id = #{id}
+	</update>
+	<update id="incCommentCount" parameterType="Long">
+		update question set comment_count = comment_count +1 where id = #{id}
 	</update>
 </mapper>

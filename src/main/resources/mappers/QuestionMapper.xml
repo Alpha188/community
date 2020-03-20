@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.community.mapper.QuestionMapper">
   <resultMap id="BaseResultMap" type="com.alpha.community.model.Question">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="creator" jdbcType="BIGINT" property="creator" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
     <result column="like_count" jdbcType="INTEGER" property="likeCount" />
@@ -109,17 +109,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from question
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from question
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.alpha.community.model.QuestionExample">
     delete from question
@@ -132,7 +132,7 @@
       comment_count, like_count, view_count, 
       tag, gmt_create, gmt_modified, 
       description)
-    values (#{id,jdbcType=INTEGER}, #{creator,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{creator,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
       #{commentCount,jdbcType=INTEGER}, #{likeCount,jdbcType=INTEGER}, #{viewCount,jdbcType=INTEGER}, 
       #{tag,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
       #{description,jdbcType=LONGVARCHAR})
@@ -173,10 +173,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="creator != null">
-        #{creator,jdbcType=INTEGER},
+        #{creator,jdbcType=BIGINT},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -214,10 +214,10 @@
     update question
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.creator != null">
-        creator = #{record.creator,jdbcType=INTEGER},
+        creator = #{record.creator,jdbcType=BIGINT},
       </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
@@ -250,8 +250,8 @@
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update question
-    set id = #{record.id,jdbcType=INTEGER},
-      creator = #{record.creator,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=BIGINT},
+      creator = #{record.creator,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       comment_count = #{record.commentCount,jdbcType=INTEGER},
       like_count = #{record.likeCount,jdbcType=INTEGER},
@@ -266,8 +266,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update question
-    set id = #{record.id,jdbcType=INTEGER},
-      creator = #{record.creator,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=BIGINT},
+      creator = #{record.creator,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       comment_count = #{record.commentCount,jdbcType=INTEGER},
       like_count = #{record.likeCount,jdbcType=INTEGER},
@@ -283,7 +283,7 @@
     update question
     <set>
       <if test="creator != null">
-        creator = #{creator,jdbcType=INTEGER},
+        creator = #{creator,jdbcType=BIGINT},
       </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
@@ -310,11 +310,11 @@
         description = #{description,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.alpha.community.model.Question">
     update question
-    set creator = #{creator,jdbcType=INTEGER},
+    set creator = #{creator,jdbcType=BIGINT},
       title = #{title,jdbcType=VARCHAR},
       comment_count = #{commentCount,jdbcType=INTEGER},
       like_count = #{likeCount,jdbcType=INTEGER},
@@ -323,11 +323,11 @@
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       description = #{description,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.alpha.community.model.Question">
     update question
-    set creator = #{creator,jdbcType=INTEGER},
+    set creator = #{creator,jdbcType=BIGINT},
       title = #{title,jdbcType=VARCHAR},
       comment_count = #{commentCount,jdbcType=INTEGER},
       like_count = #{likeCount,jdbcType=INTEGER},
@@ -335,6 +335,6 @@
       tag = #{tag,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

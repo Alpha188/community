@@ -1,7 +1,7 @@
 drop table if exists question;
 CREATE TABLE `community`.`question` (
-  `id` INT NOT NULL AUTO_INCREMENT comment "主键",
-  `creator` INT NOT NULL comment "创建者ID",
+  `id` BIGINT unsigned NOT NULL AUTO_INCREMENT comment "主键",
+  `creator` BIGINT NOT NULL comment "创建者ID",
   `title` VARCHAR(50) NOT NULL comment "问题标题",
   `description` TEXT NOT NULL comment "问题描述",
   `comment_count` INT NOT NULL DEFAULT 0 comment "评论数",

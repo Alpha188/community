@@ -1,6 +1,6 @@
 drop table if exists user;
 CREATE TABLE `user` (
-	`id` int(11) unsigned NOT NULL AUTO_INCREMENT comment "主键",
+	`id` BIGINT unsigned NOT NULL AUTO_INCREMENT comment "主键",
 	`account_id` varchar(100) NOT NULL comment "用户ID",
 	`name` varchar(50) comment "用户名",
 	`token` varchar(36) NOT NULL comment "令牌",

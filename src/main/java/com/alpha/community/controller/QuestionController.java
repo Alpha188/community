@@ -24,7 +24,7 @@ public class QuestionController {
 	@Autowired
 	private QuestionExtMapper questionExtMapper;
 	@GetMapping("/question/{id}")
-	public String question(@PathVariable("id") Integer id, Model model) {
+	public String question(@PathVariable("id") Long id, Model model) {
 		// 增加阅读数
 		questionExtMapper.incViewCount(id);
 		// 获取问题

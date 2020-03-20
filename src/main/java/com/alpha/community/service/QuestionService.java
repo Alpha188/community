@@ -15,7 +15,7 @@ import com.alpha.community.model.QuestionExample;
 import com.alpha.community.model.User;
 import com.alpha.community.model.UserExample;
 import com.alpha.community.dto.QuestionDTO;
-import com.alpha.community.exception.CustomizeErrorCodeEnum;
+import com.alpha.community.enums.CustomizeErrorCodeEnum;
 import com.alpha.community.exception.CustomizeException;
 
 @Service
@@ -31,7 +31,7 @@ public class QuestionService {
 		return questionExtMapper.listWithUser();
 	}
 
-	public List<QuestionDTO> listByCreator(Integer creator) {
+	public List<QuestionDTO> listByCreator(Long creator) {
 		return questionExtMapper.listWithUserByCreator(creator);
 	}
 
@@ -49,15 +49,15 @@ public class QuestionService {
 			example.createCriteria().andIdEqualTo(question.getId());
 			int updated = questionMapper.updateByExampleSelective(question, example);
 			if (updated != 1) {
-				throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FIND);
+				throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FOUND);
 			}
 		}
 	}
 
-	public QuestionDTO getWithUser(Integer id) {
+	public QuestionDTO getWithUser(Long id) {
 		Question question = questionMapper.selectByPrimaryKey(id);
 		if(question==null) {
-			throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FIND);
+			throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FOUND);
 		}
 		UserExample example = new UserExample();
 		example.createCriteria().andIdEqualTo(question.getCreator());

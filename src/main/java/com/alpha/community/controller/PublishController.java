@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.alpha.community.exception.CustomizeErrorCodeEnum;
+import com.alpha.community.enums.CustomizeErrorCodeEnum;
 import com.alpha.community.exception.CustomizeException;
 import com.alpha.community.mapper.QuestionMapper;
 import com.alpha.community.model.Question;
@@ -32,10 +32,10 @@ public class PublishController {
 	}
 
 	@GetMapping("/publish/{id}")
-	public String edit(@PathVariable("id") Integer id, Model model) {
+	public String edit(@PathVariable("id") Long id, Model model) {
 		Question question = questionMapper.selectByPrimaryKey(id);
 		if (question == null) {
-			throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FIND);
+			throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FOUND);
 		} else {
 			model.addAttribute("id", question.getId());
 			model.addAttribute("title", question.getTitle());
@@ -49,7 +49,7 @@ public class PublishController {
 	public String doPublish(@RequestParam(value = "title", required = false) String title,
 			@RequestParam(value = "description", required = false) String description,
 			@RequestParam(value = "tag", required = false) String tag,
-			@RequestParam(value = "id", required = false) Integer id, HttpServletRequest req, Model model) {
+			@RequestParam(value = "id", required = false) Long id, HttpServletRequest req, Model model) {
 		model.addAttribute("title", title);
 		model.addAttribute("description", description);
 		model.addAttribute("tag", tag);

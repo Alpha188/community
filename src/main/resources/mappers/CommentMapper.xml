@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.alpha.community.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.alpha.community.model.User">
+<mapper namespace="com.alpha.community.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.alpha.community.model.Comment">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="commentator" jdbcType="BIGINT" property="commentator" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-    <result column="bio" jdbcType="VARCHAR" property="bio" />
-    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="like_count" jdbcType="BIGINT" property="likeCount" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,15 +70,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account_id, name, token, gmt_create, gmt_modified, bio, avatar_url
+    id, parent_id, type, commentator, content, gmt_create, gmt_modified, like_count
   </sql>
-  <select id="selectByExample" parameterType="com.alpha.community.model.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.alpha.community.model.CommentExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from user
+    from comment
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,41 +89,44 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user
+    from comment
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from user
+    delete from comment
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.alpha.community.model.UserExample">
-    delete from user
+  <delete id="deleteByExample" parameterType="com.alpha.community.model.CommentExample">
+    delete from comment
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.alpha.community.model.User">
-    insert into user (id, account_id, name, 
-      token, gmt_create, gmt_modified, 
-      bio, avatar_url)
-    values (#{id,jdbcType=BIGINT}, #{accountId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{token,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{bio,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.alpha.community.model.Comment">
+    insert into comment (id, parent_id, type, 
+      commentator, content, gmt_create, 
+      gmt_modified, like_count)
+    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{commentator,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{likeCount,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.alpha.community.model.User">
-    insert into user
+  <insert id="insertSelective" parameterType="com.alpha.community.model.Comment">
+    insert into comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="accountId != null">
-        account_id,
+      <if test="parentId != null">
+        parent_id,
       </if>
-      <if test="name != null">
-        name,
+      <if test="type != null">
+        type,
       </if>
-      <if test="token != null">
-        token,
+      <if test="commentator != null">
+        commentator,
+      </if>
+      <if test="content != null">
+        content,
       </if>
       <if test="gmtCreate != null">
         gmt_create,
@@ -131,25 +134,25 @@
       <if test="gmtModified != null">
         gmt_modified,
       </if>
-      <if test="bio != null">
-        bio,
-      </if>
-      <if test="avatarUrl != null">
-        avatar_url,
+      <if test="likeCount != null">
+        like_count,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="accountId != null">
-        #{accountId,jdbcType=VARCHAR},
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
       </if>
-      <if test="token != null">
-        #{token,jdbcType=VARCHAR},
+      <if test="commentator != null">
+        #{commentator,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
@@ -157,34 +160,34 @@
       <if test="gmtModified != null">
         #{gmtModified,jdbcType=TIMESTAMP},
       </if>
-      <if test="bio != null">
-        #{bio,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null">
-        #{avatarUrl,jdbcType=VARCHAR},
+      <if test="likeCount != null">
+        #{likeCount,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.alpha.community.model.UserExample" resultType="java.lang.Long">
-    select count(*) from user
+  <select id="countByExample" parameterType="com.alpha.community.model.CommentExample" resultType="java.lang.Long">
+    select count(*) from comment
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update user
+    update comment
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.accountId != null">
-        account_id = #{record.accountId,jdbcType=VARCHAR},
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
       </if>
-      <if test="record.token != null">
-        token = #{record.token,jdbcType=VARCHAR},
+      <if test="record.commentator != null">
+        commentator = #{record.commentator,jdbcType=BIGINT},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
       </if>
       <if test="record.gmtCreate != null">
         gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
@@ -192,11 +195,8 @@
       <if test="record.gmtModified != null">
         gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.bio != null">
-        bio = #{record.bio,jdbcType=VARCHAR},
-      </if>
-      <if test="record.avatarUrl != null">
-        avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
+      <if test="record.likeCount != null">
+        like_count = #{record.likeCount,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -204,30 +204,33 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update user
+    update comment
     set id = #{record.id,jdbcType=BIGINT},
-      account_id = #{record.accountId,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      token = #{record.token,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=INTEGER},
+      commentator = #{record.commentator,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=VARCHAR},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      bio = #{record.bio,jdbcType=VARCHAR},
-      avatar_url = #{record.avatarUrl,jdbcType=VARCHAR}
+      like_count = #{record.likeCount,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.alpha.community.model.User">
-    update user
+  <update id="updateByPrimaryKeySelective" parameterType="com.alpha.community.model.Comment">
+    update comment
     <set>
-      <if test="accountId != null">
-        account_id = #{accountId,jdbcType=VARCHAR},
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="token != null">
-        token = #{token,jdbcType=VARCHAR},
+      <if test="commentator != null">
+        commentator = #{commentator,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
@@ -235,24 +238,21 @@
       <if test="gmtModified != null">
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
-      <if test="bio != null">
-        bio = #{bio,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null">
-        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      <if test="likeCount != null">
+        like_count = #{likeCount,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.alpha.community.model.User">
-    update user
-    set account_id = #{accountId,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      token = #{token,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.alpha.community.model.Comment">
+    update comment
+    set parent_id = #{parentId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      commentator = #{commentator,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      bio = #{bio,jdbcType=VARCHAR},
-      avatar_url = #{avatarUrl,jdbcType=VARCHAR}
+      like_count = #{likeCount,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

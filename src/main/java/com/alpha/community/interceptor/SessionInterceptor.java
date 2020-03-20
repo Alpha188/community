@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.alpha.community.enums.CustomizeErrorCodeEnum;
+import com.alpha.community.exception.CustomizeException;
 import com.alpha.community.mapper.UserMapper;
 import com.alpha.community.model.User;
 import com.alpha.community.model.UserExample;
@@ -18,7 +20,7 @@ import com.alpha.community.model.UserExample;
 public class SessionInterceptor implements HandlerInterceptor {
 	@Autowired
 	private UserMapper userMapper;
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -30,8 +32,13 @@ public class SessionInterceptor implements HandlerInterceptor {
 					UserExample userExample = new UserExample();
 					userExample.createCriteria().andTokenEqualTo(token);
 					List<User> users = userMapper.selectByExample(userExample);
-					request.getSession().setAttribute("user", users.get(0));
-					break;
+					if (users.size() != 0) {
+						request.getSession().setAttribute("user", users.get(0));
+						break;
+					} else {
+						throw new CustomizeException(CustomizeErrorCodeEnum.USUER_NOT_FOUND);
+					}
+
 				}
 			}
 		}

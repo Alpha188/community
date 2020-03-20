@@ -8,8 +8,10 @@ public interface QuestionExtMapper {
 
 	List<QuestionDTO> listWithUser();
 
-	List<QuestionDTO> listWithUserByCreator(Integer creator);
+	List<QuestionDTO> listWithUserByCreator(Long creator);
 
-	void incViewCount(Integer id);
+	void incViewCount(Long id);
+
+	void incCommentCount(Long id);
 
 }
