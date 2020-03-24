@@ -41,7 +41,7 @@ public class QuestionService {
 			// 插入
 			question.setGmtCreate(date);
 			question.setGmtModified(date);
-			questionMapper.insert(question);
+			questionMapper.insertSelective(question);
 		} else {
 			// 更新
 			question.setGmtModified(date);
@@ -68,5 +68,7 @@ public class QuestionService {
 		questionDTO.setUser(users.get(0));
 		return questionDTO;
 	}
+	
+	
 
 }

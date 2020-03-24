@@ -29,7 +29,7 @@ public class UserService {
 			Date date = new Date();
 			user.setGmtCreate(date);
 			user.setGmtModified(date);
-			userMapper.insert(user);
+			userMapper.insertSelective(user);
 		} else {
 			// 更新
 			User dbUser = users.get(0);

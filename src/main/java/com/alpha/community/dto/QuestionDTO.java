@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class QuestionDTO {
     private Long id;
-    private Integer creator;
+    private Long creator;
     private String title;
     private Integer commentCount;
     private Integer likeCount;

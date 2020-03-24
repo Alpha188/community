@@ -1,17 +1,31 @@
 package com.alpha.community.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alpha.community.dto.CommentDTO;
 import com.alpha.community.enums.CommentTypeEnum;
 import com.alpha.community.enums.CustomizeErrorCodeEnum;
 import com.alpha.community.exception.CustomizeException;
 import com.alpha.community.mapper.CommentMapper;
 import com.alpha.community.mapper.QuestionExtMapper;
 import com.alpha.community.mapper.QuestionMapper;
+import com.alpha.community.mapper.UserMapper;
 import com.alpha.community.model.Comment;
+import com.alpha.community.model.CommentExample;
 import com.alpha.community.model.Question;
+import com.alpha.community.model.User;
+import com.alpha.community.model.UserExample;
 
 @Service
 public class CommentService {
@@ -21,6 +35,8 @@ public class CommentService {
 	private QuestionExtMapper questionExtMapper;
 	@Autowired
 	private QuestionMapper questionMapper;
+	@Autowired
+	private UserMapper userMapper;
 
 	@Transactional
 	public void insert(Comment comment) {
@@ -67,6 +83,40 @@ public class CommentService {
 			questionExtMapper.incCommentCount(question.getId());
 		}
 
+	}
+
+	public List<CommentDTO> listByQuestionId(Long id) {
+		CommentExample commentExample = new CommentExample();
+		commentExample.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+		// 拿到所有评论
+		List<Comment> comments = commentMapper.selectByExample(commentExample);
+
+		if (comments.size() == 0) {
+			return new ArrayList<CommentDTO>();
+		}
+
+		// 拿到所有非重复的评论者
+		Set<Long> distinctCommentators = comments.stream().map(comment -> comment.getCommentator())
+				.collect(Collectors.toSet());
+		ArrayList<Long> userIds = new ArrayList<Long>();
+		userIds.addAll(distinctCommentators);
+		UserExample userExample = new UserExample();
+		userExample.createCriteria().andIdIn(userIds);
+		// 拿到所有非重复的评论者的用户信息
+		List<User> distinctUsers = userMapper.selectByExample(userExample);
+		Map<Long, User> userMap = distinctUsers.stream()
+				.collect(Collectors.toMap(user -> user.getId(), user -> user));
+
+		// 拿到所有评论的用户信息
+		List<CommentDTO> CommentDTOs = comments.stream().map(comment -> {
+			CommentDTO commentDTO = new CommentDTO();
+			BeanUtils.copyProperties(comment, commentDTO);
+			User user = userMap.get(comment.getCommentator());
+			commentDTO.setUser(user);
+			return commentDTO;
+		}).collect(Collectors.toList());
+
+		return CommentDTOs;
 	}
 
 }

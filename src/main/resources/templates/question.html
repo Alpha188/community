@@ -12,41 +12,111 @@
 <body>
 	<div class="container-fluid" th:insert="~{navigation :: navbar}"></div>
 
-	<!-- 话题列表 -->
+	
 	<div class="container-fluid main">
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
-				<h3 th:text="${question.title}"></h3>
-				<span class="text-desc"> 
-					作者：<span th:text="${question.user.name}"></span> | 
-					发布于：<span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span> | 
-					阅读数：<span th:text="${question.viewCount}"></span> |
-				</span>
-
-				<hr>
-
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">问题详情</div>
-
-				<br><hr>
-
+			<!-- 左侧：话题列表 -->
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 question-main-content">
+				<!-- 话题整体信息 -->
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<a th:href="'/publish/'+${question.id}" th:if="${session.user!=null && question.creator==session.user.id}"> 
-						<span class="glyphicon glyphicon-pencil community-menu" aria-hidden="true">编辑</span>
+					<!-- 标题 -->
+					<h1 class="question-title" th:text="${question.title}"></h1>
+					<!-- 问题信息 -->
+					<span class="text-desc"> 
+						作者：<span th:text="${question.user.name}"></span> | 
+						发布于：<span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span> | 
+						阅读数：<span th:text="${question.viewCount}"></span> |
+					</span>
+					<hr>
+					<!-- 问题描述 -->
+					<p th:text="${question.description}"></p>
+					<hr>
+				</div>
+
+
+				
+				<!-- 编辑按钮 -->
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<a th:href="'/publish/'+${question.id}" th:if="${session.user != null && session.user.id == question.creator}"> 
+						<span class="glyphicon glyphicon-pencil quetion-edit" aria-hidden="true">编辑</span>
 					</a>
+				</div>
+				
+				
+				<!-- 回复展示 -->
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h3>
+						<span th:text="${question.commentCount}"></span>个回复
+					</h3>
+					<br>
+					<!-- 回复人信息+内容 -->
+					<div class="media comment-item" th:each="comment:${comments}">
+						<a class="pull-left" href="#"> <!-- 头像 --> 
+							<img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">
+						</a>
+						<div class="media-body comment-userName">
+							<h5 class="media-heading">
+								<a th:text="${comment.user.name}"></a> <!-- 用户名 -->
+							</h5>
+							<span th:text="${comment.content}"></span>
+							
+							<!-- 社交操作 -->
+							<div class="comment-operate">
+                                <span class="glyphicon glyphicon-thumbs-up icon"></span>
+                                <span class="glyphicon glyphicon-comment icon"></span>
+                                <span class="pull-right" th:text="${#dates.format(comment.gmtCreate, 'yyyy-MM-dd')}"></span>
+                            </div>
+						</div>
+						
+					</div>
+
+			
+				</div>
+
+
+
+				<!-- 当前用户信息 -->
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="media" th:if="${session.user!=null}">
+						<a class="pull-left" href="#"> <!-- 头像 --> <img
+							class="media-object img-rounded"
+							th:src="${session.user.avatarUrl}">
+						</a>
+						<div class="media-body general-userName">
+							<h5 class="media-heading">
+								<!-- 用户名 -->
+								<a th:text="${session.user.name}"></a>
+							</h5>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 回复操作 -->
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<!-- 隐藏节点:ID -->
+					<input type="hidden" id="questionId" th:value="${question.id}">
+					<!-- 回复框 -->
+					<textarea class="form-control text-comment" rows="10"></textarea>
+					<!-- 回复按钮 -->
+					<button type="button" class="btn btn-success btn-comment">回复</button>
 				</div>
 			</div>
 			
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+			
+			
+			<!-- 右侧：发起人信息 -->
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 question-side-bar">
 				<div class="aw-mod publish-help">
 					<div class="mod-head">
 						<h4>发起人</h4>
 						<div class="media">
+							<!-- 头像 -->
 							<a class="pull-left" href="#"> <img class="media-object img-rounded" th:src="${question.user.avatarUrl}"></a>
-							<div class="media-body">
+							<div class="media-body general-userName">
 								<h5 class="media-heading">
+									<!-- 用户名 -->
 									<a th:text="${question.user.name}"></a>
 								</h5>
-								<span class="text-desc" th:text="${question.user.bio}"></span>
 							</div>
 						</div>
 						<hr />
@@ -61,7 +131,8 @@
 
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/community.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 
 </html>

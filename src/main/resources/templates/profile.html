@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<title th:text="${sectionName}"></title>
-<link rel="stylesheet" href="/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="/css/community.css">
+	<meta charset="UTF-8">
+	<title th:text="${sectionName}"></title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="/css/community.css">
 </head>
 
 <body>
@@ -15,25 +15,27 @@
 	<!-- 话题列表 -->
 	<div class="container-fluid main">
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" th:insert="~{questions :: questions}"></div> 
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" th:insert="~{questions :: questions}"></div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
 				<div class="aw-mod publish-help">
 					<div class="mod-head">
 						<div class="list-group">
-						  <a href="/profile/questions" th:class="${section == 'questions'}?'list-group-item active':'list-group-item'">我的问题</a>
-						  
-						  <a href="/profile/replies" th:class="${section=='replies'}?'list-group-item active':'list-group-item'">
-						  	最新回复<span class="badge">14</span>
-						  </a>
-						  
+							<a href="/profile/questions"
+								th:class="${section == 'questions'}?'list-group-item active':'list-group-item'">我的问题</a>
+
+							<a href="/profile/replies"
+								th:class="${section=='replies'}?'list-group-item active':'list-group-item'">
+								最新回复<span class="badge">14</span>
+							</a>
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 </body>
 <script src="/js/dist/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

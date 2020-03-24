@@ -7,6 +7,15 @@
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="/css/community.css">
+	<script>
+		window.onload = function(){
+			if(window.localStorage.getItem("closable")){
+				window.close();
+				window.localStorage.removeItem();
+			}
+		}
+	
+	</script>
 </head>
 
 <body>

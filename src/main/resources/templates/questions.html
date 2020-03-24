@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
 </head>
+
 <body>
-<!-- 话题列表 -->
-<div th:fragment="questions">
-	
+	<!-- 话题列表 -->
+	<div th:fragment="questions">
+
 		<h2 class="h2-desc">
-			<span class="glyphicon glyphicon-list" aria-hidden="true"></span> 
-			<span th:if="${section==null}")> 发现</span> 
-			<span th:if="${section!=null}") th:text="${sectionName}"></span> 
+			<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+			<span th:if="${section==null}" )> 发现</span>
+			<span th:if="${section!=null}" ) th:text="${sectionName}"></span>
 		</h2>
 		<hr>
 
 		<div class="media" th:each="question:${pageInfo.list}">
 			<a class="pull-left" href="#">
-			  <img class="media-object img-rounded" th:src="${question.user.avatarUrl}"> 
+				<img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
 			</a>
 			<div class="media-body">
-				<h4 class="media-heading"><a th:text="${question.title}" th:href="@{'/question/'+${question.id}}"></a></h4>
+				<h4 class="media-heading"><a th:text="${question.title}" th:href="@{'/question/'+${question.id}}"></a>
+				</h4>
 				<p th:text="${question.description}"></p>
-				<span class="text-desc"> 
-				<span th:text="${question.commentCount}"></span> 个评论 • 
-				<span th:text="${question.viewCount}"></span> 次浏览 •
-				<span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span> 
+				<span class="text-desc">
+					<span th:text="${question.commentCount}"></span> 个评论 •
+					<span th:text="${question.viewCount}"></span> 次浏览 •
+					<span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span> 
 				</span>
 			</div>
 		</div>

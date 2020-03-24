@@ -1,5 +1,5 @@
 drop table if exists question;
-CREATE TABLE `community`.`question` (
+CREATE TABLE `question` (
   `id` BIGINT unsigned NOT NULL AUTO_INCREMENT comment "主键",
   `creator` BIGINT NOT NULL comment "创建者ID",
   `title` VARCHAR(50) NOT NULL comment "问题标题",
