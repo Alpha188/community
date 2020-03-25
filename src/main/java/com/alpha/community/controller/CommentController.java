@@ -1,6 +1,7 @@
 package com.alpha.community.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,12 +9,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alpha.community.dto.CommentCreateDTO;
+import com.alpha.community.dto.CommentDTO;
 import com.alpha.community.dto.ResultDTO;
+import com.alpha.community.enums.CommentTypeEnum;
 import com.alpha.community.enums.CustomizeErrorCodeEnum;
 import com.alpha.community.exception.CustomizeErrorCode;
 import com.alpha.community.mapper.CommentMapper;
@@ -31,7 +36,7 @@ public class CommentController {
 	
 	@PostMapping("/comment")
 	@ResponseBody
-	public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
+	public ResultDTO post(@RequestBody CommentCreateDTO commentCreateDTO,
 					   HttpServletRequest request){
 		 User user = (User) request.getSession().getAttribute("user");
 	        if (user == null) {
@@ -50,8 +55,21 @@ public class CommentController {
 			comment.setGmtModified(date);
 	        comment.setGmtCreate(date);
 	        comment.setCommentator(user.getId());
-	        comment.setLikeCount(0L);
+	        comment.setLikeCount(0);
 	        commentService.insert(comment);
-	        return ResultDTO.ok();
+	        return ResultDTO.okOf();
+	}
+	
+	@GetMapping("/comment/{id}")
+	@ResponseBody
+	public ResultDTO<List<CommentDTO>> getSubComment(@PathVariable("id")Long id,
+			HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null) {
+			 return ResultDTO.errorOf(CustomizeErrorCodeEnum.NO_LOGIN);
+        }
+		List<CommentDTO> subComments = commentService.listByTargetId(id,CommentTypeEnum.COMMENT);
+		
+	   return ResultDTO.okOf(subComments);
 	}
 }

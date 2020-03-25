@@ -17,7 +17,9 @@ public class Comment {
 
     private Date gmtModified;
 
-    private Long likeCount;
+    private Integer likeCount;
+
+    private Integer commentCount;
 
     public Long getId() {
         return id;
@@ -75,11 +77,19 @@ public class Comment {
         this.gmtModified = gmtModified;
     }
 
-    public Long getLikeCount() {
+    public Integer getLikeCount() {
         return likeCount;
     }
 
-    public void setLikeCount(Long likeCount) {
+    public void setLikeCount(Integer likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 }

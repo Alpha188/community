@@ -22,11 +22,11 @@ body {
 	height: 38px;
 }
 
-.general-userName {
+.user-body {
 	padding-top: 10px;
 }
 
-.comment-userName {
+.comment-body {
 	padding-top: 0;
 }
 
@@ -74,10 +74,7 @@ body {
 	margin-top: 5px;
 }
 
-.comment-operate .icon {
-	margin-right: 6px;
-	cursor: pointer;
-}
+
 
 .comment-item{
 	padding-bottom: 5px;
@@ -89,6 +86,22 @@ body {
 	border-right: 1px solid #eee;
 }
 
+.btn-sub-comment-submit{
+	margin-top: 10px;
+}
+.sub-comments .well {
+	padding-bottom: 60px;
+}
+
+.comment-operate .operate {
+	cursor: pointer;
+	border-radius: 4px 0 0 4px;
+	padding: 0 5px;
+}
+
+.comment-operate .operate:hover {
+	color: rgb(73, 158, 243);
+}
 
 
 

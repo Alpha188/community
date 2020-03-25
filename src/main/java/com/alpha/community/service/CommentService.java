@@ -17,6 +17,7 @@ import com.alpha.community.dto.CommentDTO;
 import com.alpha.community.enums.CommentTypeEnum;
 import com.alpha.community.enums.CustomizeErrorCodeEnum;
 import com.alpha.community.exception.CustomizeException;
+import com.alpha.community.mapper.CommentExtMapper;
 import com.alpha.community.mapper.CommentMapper;
 import com.alpha.community.mapper.QuestionExtMapper;
 import com.alpha.community.mapper.QuestionMapper;
@@ -37,6 +38,8 @@ public class CommentService {
 	private QuestionMapper questionMapper;
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private CommentExtMapper commentExtMapper;
 
 	@Transactional
 	public void insert(Comment comment) {
@@ -67,6 +70,8 @@ public class CommentService {
 
 			// 3.插入
 			commentMapper.insertSelective(comment);
+			// 4.增加父评论的评论数
+			commentExtMapper.incCommentCount(comment.getParentId());
 
 		} else {
 			// 对问题进行回复
@@ -85,9 +90,10 @@ public class CommentService {
 
 	}
 
-	public List<CommentDTO> listByQuestionId(Long id) {
+	public List<CommentDTO> listByTargetId(Long id,CommentTypeEnum typeEnum) {
 		CommentExample commentExample = new CommentExample();
-		commentExample.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+		commentExample.setOrderByClause("gmt_modified desc");
+		commentExample.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(typeEnum.getType());
 		// 拿到所有评论
 		List<Comment> comments = commentMapper.selectByExample(commentExample);
 

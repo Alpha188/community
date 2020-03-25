@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alpha.community.dto.CommentDTO;
 import com.alpha.community.dto.QuestionDTO;
+import com.alpha.community.enums.CommentTypeEnum;
 import com.alpha.community.mapper.QuestionExtMapper;
 import com.alpha.community.service.CommentService;
 import com.alpha.community.service.QuestionService;
@@ -33,7 +34,7 @@ public class QuestionController {
 		questionExtMapper.incViewCount(id);
 		
 		// 获取评论
-		List<CommentDTO> comments=commentService.listByQuestionId(id);
+		List<CommentDTO> comments=commentService.listByTargetId(id,CommentTypeEnum.QUESTION);
 		// 获取问题
 		QuestionDTO question = questionService.getWithUser(id);
 		model.addAttribute("question", question);

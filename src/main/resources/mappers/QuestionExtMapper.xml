@@ -7,11 +7,11 @@
 	</resultMap>
 
 	<select id="listWithUser" resultMap="ResultMapWithUser">
-		select * from question
+		select * from question order by gmt_modified desc
 	</select>
 	
 	<select id="listWithUserByCreator" resultMap="ResultMapWithUser" parameterType="Long">
-		select * from question where creator = #{creator}
+		select * from question where creator = #{creator} order by gmt_modified desc
 	</select>
 	
 	<update id="incViewCount" parameterType="Long">
