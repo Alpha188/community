@@ -56,6 +56,9 @@ $(function () {
 		$("#select-tag").show();
 	});
 	
+	/**
+	 * 点击标签自动在标签输入框追加标签
+	 */
 	$(".question-tag").on("click",function () {
 	    var value = this.getAttribute("data-tag");
 	    var previous = $("#tag").val();

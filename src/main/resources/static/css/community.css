@@ -121,7 +121,21 @@ body {
     border-radius: 4px;
     margin: 4px;
 }
+.publish-tag-tab {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+}
 
+.question-desc{
+	display: inline-block;
+	  line-height: 24px;
+	  padding: 5px 0;
+	  margin-right: 10px;
+	  word-wrap: break-word;
+	  word-break: break-all;
+	  overflow: hidden; 
+}
 
 
 

@@ -27,7 +27,7 @@ public class IndexController {
 	public String index(HttpServletRequest req,
 						Model model,
 						@RequestParam(name="page",defaultValue="1") Integer page,
-						@RequestParam(name="size",defaultValue="5") Integer size) {
+						@RequestParam(name="size",defaultValue="10") Integer size) {
 		
 		PageHelper.startPage(page, size);
 		List<QuestionDTO> questionList = questionService.list();

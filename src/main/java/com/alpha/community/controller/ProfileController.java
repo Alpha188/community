@@ -27,7 +27,7 @@ public class ProfileController {
 						  Model model,
 						  HttpServletRequest req,
 						  @RequestParam(name="page",defaultValue="1") Integer page,
-						  @RequestParam(name="size",defaultValue="5") Integer size) {
+						  @RequestParam(name="size",defaultValue="10") Integer size) {
 
 		if ("questions".equals(action)) {
 			model.addAttribute("section", "questions");
