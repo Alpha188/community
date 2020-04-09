@@ -17,6 +17,7 @@ import com.alpha.community.dto.CommentDTO;
 import com.alpha.community.dto.QuestionDTO;
 import com.alpha.community.enums.CommentTypeEnum;
 import com.alpha.community.mapper.QuestionExtMapper;
+import com.alpha.community.model.Question;
 import com.alpha.community.service.CommentService;
 import com.alpha.community.service.QuestionService;
 
@@ -32,13 +33,16 @@ public class QuestionController {
 	public String question(@PathVariable("id") Long id, Model model) {
 		// 增加阅读数
 		questionExtMapper.incViewCount(id);
-		
-		// 获取评论
-		List<CommentDTO> comments=commentService.listByTargetId(id,CommentTypeEnum.QUESTION);
 		// 获取问题
 		QuestionDTO question = questionService.getWithUser(id);
+		// 获取评论
+		List<CommentDTO> comments=commentService.listByTargetId(id,CommentTypeEnum.QUESTION);
+		// 获取标签相关问题
+		List<Question> relatedQuestions=questionService.listRelated(question);
+		
 		model.addAttribute("question", question);
 		model.addAttribute("comments", comments);
+		model.addAttribute("relatedQuestions", relatedQuestions);
 		return "question";
 	}
 

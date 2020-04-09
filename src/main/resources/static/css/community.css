@@ -59,8 +59,7 @@ body {
 	margin: 10% auto;
 }
 
-.btn-comment {
-	float: right;
+.btn-comment-submit {
 	margin: 20px 0;
 }
 
@@ -103,7 +102,25 @@ body {
 	color: rgb(73, 158, 243);
 }
 
-
+.question-side-bar{
+	margin-top: 30px;
+}
+.question-tag{
+	margin-right: 5px;
+	white-space: normal;
+    margin: 5px 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+.community-tag {
+    text-decoration-line: none;
+    display: inline-block;
+    height: 20px;
+    line-height: 16px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    margin: 4px;
+}
 
 
 

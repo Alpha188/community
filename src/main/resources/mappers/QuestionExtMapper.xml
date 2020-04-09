@@ -17,7 +17,13 @@
 	<update id="incViewCount" parameterType="Long">
 		update question set view_count = view_count +1 where id = #{id}
 	</update>
+	
 	<update id="incCommentCount" parameterType="Long">
 		update question set comment_count = comment_count +1 where id = #{id}
 	</update>
+	
+	<select id="listRelated" resultType="Question" parameterType="Question">
+		select * from question where id!=#{id} and tag regexp #{tag};
+	</select>
+	
 </mapper>

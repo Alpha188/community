@@ -33,6 +33,15 @@
 					<hr>
 				</div>
 
+				<!-- 问题标签 -->
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 question-tags">
+					<span class="label label-info question-tag" th:each="tag : ${question.tag.split(',')}">
+						<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+						<span th:text="${tag}"></span> 
+					</span>
+					<hr>
+				</div>
+								
 
 				
 				<!-- 编辑按钮 -->
@@ -132,9 +141,9 @@
 			
 			<!-- 右侧：发起人信息 -->
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 question-side-bar">
-				<div class="aw-mod publish-help">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="mod-head">
-						<h4>发起人</h4>
+						<h4 class="">发起人</h4>
 						<div class="media">
 							<!-- 头像 -->
 							<a class="pull-left" href="#"> <img class="media-object img-rounded" th:src="${question.user.avatarUrl}"></img></a>
@@ -144,11 +153,22 @@
 									<a th:text="${question.user.name}"></a>
 								</h5>
 							</div>
+							<hr />
 						</div>
-						<hr />
-						<h4>相关问题</h4>
+						
 					</div>
 				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h4>相关问题</h4>
+					<ul th:each="relatedQuestion:${relatedQuestions}">
+						<li>
+							<a th:text="${relatedQuestion.title}" 
+								th:href="@{'/question/'+${relatedQuestion.id}}">
+							</a>
+						</li>
+					</ul>
+				</div>
+			
 			</div>
 
 

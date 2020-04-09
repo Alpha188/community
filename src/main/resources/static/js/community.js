@@ -46,8 +46,31 @@ $(function () {
 		else{
 			$("#cmt-" + subCommentParentId + " .well").children().remove();
 		}
-	})
+	});
+	
+	
+	/**
+	 * 点击标签输入框弹出标签库
+	 */
+	$("#tag").on("click", function() {
+		$("#select-tag").show();
+	});
+	
+	$(".question-tag").on("click",function () {
+	    var value = this.getAttribute("data-tag");
+	    var previous = $("#tag").val();
+	    if (previous.split(",").indexOf(value) == -1) {
+	        if (previous) {
+	            $("#tag").val(previous + ',' + value);
+	        } else {
+	            $("#tag").val(value);
+	        }
+	    }
+	});
 })
+
+
+
 /**
  * 构建二级评论
  * @param {*} comment 

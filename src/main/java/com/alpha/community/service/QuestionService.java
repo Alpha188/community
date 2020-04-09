@@ -1,8 +1,10 @@
 package com.alpha.community.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +69,17 @@ public class QuestionService {
 		BeanUtils.copyProperties(question, questionDTO);
 		questionDTO.setUser(users.get(0));
 		return questionDTO;
+	}
+
+	public List<Question> listRelated(QuestionDTO questionDTO) {
+		if(StringUtils.isBlank(questionDTO.getTag())) {
+			return new ArrayList<Question>();
+		}
+		Question question = new Question();
+		question.setId(questionDTO.getId());
+		question.setTag(questionDTO.getTag().replaceAll(",", "|"));
+		
+		return questionExtMapper.listRelated(question);
 	}
 	
 	
