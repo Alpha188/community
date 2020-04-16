@@ -1,8 +1,10 @@
 package com.alpha.community.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -29,7 +31,12 @@ public class QuestionService {
 	@Autowired
 	private UserMapper userMapper;
 
-	public List<QuestionDTO> list() {
+	public List<QuestionDTO> listByKeyword(String keyword) {
+		if(StringUtils.isNotBlank(keyword)) {
+			String[] keywords = StringUtils.split(keyword, " ");
+			String search = Arrays.stream(keywords).collect(Collectors.joining("|"));
+			return questionExtMapper.listWithUserByKeyword(search);
+		}
 		return questionExtMapper.listWithUser();
 	}
 

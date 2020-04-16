@@ -22,12 +22,18 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<form class="navbar-form navbar-left">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="搜索问题">
+							<input name="keyword" type="text" class="form-control" placeholder="搜索问题">
 						</div>
 						<button type="submit" class="btn btn-default">搜索</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="/publish">发布</a></li>
+						<li>
+							<a href="/profile/replies">通知 
+								<span class="badge" th:text="${session.unreadCount}"></span>
+							</a>
+						</li>
+						
 						<li><a href="https://github.com/login/oauth/authorize?client_id=74a455a0bddfc1639361&redirect_uri=http://localhost:8082/callback&scope=user&state=1"
 								th:if="${session.user==null}">登录</a></li>
 						<li class="dropdown" th:if="${session.user!=null}">

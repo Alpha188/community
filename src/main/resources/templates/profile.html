@@ -15,18 +15,28 @@
 	<!-- 话题列表 -->
 	<div class="container-fluid main">
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" th:insert="~{questions :: questions}"></div>
-
+			<!-- 展示我的问题或最新回复 -->
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" 
+				th:if="${section == 'questions'}" th:insert="~{profiles :: questions}">
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" 
+				th:if="${section == 'replies'}" th:insert="~{profiles :: notifications}">
+			</div>
+			
+			<!-- 侧边栏 -->
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
 				<div class="aw-mod publish-help">
 					<div class="mod-head">
 						<div class="list-group">
+							<!-- 我的问题 -->
 							<a href="/profile/questions"
 								th:class="${section == 'questions'}?'list-group-item active':'list-group-item'">我的问题</a>
-
+							<!-- 最新回复 -->
 							<a href="/profile/replies"
 								th:class="${section=='replies'}?'list-group-item active':'list-group-item'">
-								最新回复<span class="badge">14</span>
+								最新回复
+								<span class="badge" th:text="${session.unreadCount}"></span>
 							</a>
 
 						</div>
@@ -37,7 +47,7 @@
 	</div>
 
 </body>
-<script src="/js/dist/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 
 </html>

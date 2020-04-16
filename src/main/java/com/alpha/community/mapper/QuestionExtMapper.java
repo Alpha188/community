@@ -16,4 +16,6 @@ public interface QuestionExtMapper {
 	void incCommentCount(Long id);
 	
 	List<Question> listRelated(Question question);
+
+	List<QuestionDTO> listWithUserByKeyword(String keyword);
 }

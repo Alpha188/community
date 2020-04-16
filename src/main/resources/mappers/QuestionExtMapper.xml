@@ -10,6 +10,10 @@
 		select * from question order by gmt_modified desc
 	</select>
 	
+	<select id="listWithUserByKeyword" resultMap="ResultMapWithUser">
+		select * from question where title regexp #{search} order by gmt_modified desc
+	</select>
+	
 	<select id="listWithUserByCreator" resultMap="ResultMapWithUser" parameterType="Long">
 		select * from question where creator = #{creator} order by gmt_modified desc
 	</select>

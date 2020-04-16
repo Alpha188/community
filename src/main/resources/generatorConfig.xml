@@ -67,9 +67,7 @@
 		<!-- shema 数据库 tableName表明 %代表全部 -->
 
 		
-		<table tableName="comment"></table>
-		<table tableName="user"></table>
-		<table tableName="question"></table>
+		<table tableName="notification"></table>
 
 
 	</context>

@@ -10,7 +10,10 @@ public enum CustomizeErrorCodeEnum implements CustomizeErrorCode{
     TYPE_PARAM_WRONG(2005, "评论类型错误或不存在"),
     COMMENT_NOT_FOUND(2006, "回复的评论不存在了，要不要换个试试？"),
     CONTENT_IS_EMPTY(2007, "回复内容不能为空"), 
-    USUER_NOT_FOUND(2008,"用户不存在");
+    USUER_NOT_FOUND(2008,"用户不存在"), 
+    READ_NOTIFICATION_FAIL(2008, "兄弟你这是读别人的信息呢？"),
+    NOTIFICATION_NOT_FOUND(2009, "消息莫非是不翼而飞了？"),
+    LOGIN_TIME_OUT(2010, "Github登陆失败，请稍后再试");
 	
 	private String message;
 	private Integer code;

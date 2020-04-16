@@ -27,12 +27,14 @@ public class IndexController {
 	public String index(HttpServletRequest req,
 						Model model,
 						@RequestParam(name="page",defaultValue="1") Integer page,
-						@RequestParam(name="size",defaultValue="10") Integer size) {
+						@RequestParam(name="size",defaultValue="10") Integer size,
+						@RequestParam(name="keyword",required = false) String keyword) {
 		
 		PageHelper.startPage(page, size);
-		List<QuestionDTO> questionList = questionService.list();
+		List<QuestionDTO> questionList = questionService.listByKeyword(keyword);
 		PageInfo<QuestionDTO> pageInfo = new PageInfo<>(questionList, 5);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("keyword", keyword);
 		return "index";
 	}
 }

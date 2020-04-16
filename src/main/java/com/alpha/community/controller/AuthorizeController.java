@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alpha.community.dto.AccessTokenDTO;
 import com.alpha.community.dto.GithubUser;
+import com.alpha.community.enums.CustomizeErrorCodeEnum;
+import com.alpha.community.exception.CustomizeException;
 import com.alpha.community.mapper.UserMapper;
 import com.alpha.community.model.User;
 import com.alpha.community.provider.GithubProvider;
 import com.alpha.community.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class AuthorizeController {
 	private static final int COOKIE_TOKEN_AGE = 60 * 60 * 24 * 2;
 	@Autowired
@@ -62,7 +67,8 @@ public class AuthorizeController {
 			resp.addCookie(cookie);
 			return "redirect:/";
 		} else {
-			return "redirect:/";
+			log.error("用户登陆失败,{}",githubUser);
+			throw new CustomizeException(CustomizeErrorCodeEnum.LOGIN_TIME_OUT);
 		}
 	}
 	

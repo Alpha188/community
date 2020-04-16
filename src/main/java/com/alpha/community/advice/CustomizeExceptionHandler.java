@@ -23,7 +23,7 @@ import com.alpha.community.exception.CustomizeException;
  * @author alpha
  *
  */
-//@ControllerAdvice
+@ControllerAdvice
 public class CustomizeExceptionHandler{
 	/**
 	 * 捕获所有的异常

@@ -15,11 +15,14 @@ import com.alpha.community.exception.CustomizeException;
 import com.alpha.community.mapper.UserMapper;
 import com.alpha.community.model.User;
 import com.alpha.community.model.UserExample;
+import com.alpha.community.service.NotificationService;
 
 @Component
 public class SessionInterceptor implements HandlerInterceptor {
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private NotificationService notificationService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -34,6 +37,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 					List<User> users = userMapper.selectByExample(userExample);
 					if (users.size() != 0) {
 						request.getSession().setAttribute("user", users.get(0));
+						Long unreadCount = notificationService.countUnread(users.get(0).getId());
+						request.getSession().setAttribute("unreadCount", unreadCount);
 						break;
 					} else {
 						throw new CustomizeException(CustomizeErrorCodeEnum.USUER_NOT_FOUND);
